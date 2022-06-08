@@ -33,8 +33,8 @@ class BlackScholesModel(PriceModel):
             noise = np.random.randn(n_samples, n_steps - 1) * time_delta ** 0.5
             brownian_motion = np.hstack([np.zeros((n_samples, 1)), np.cumsum(noise, axis=1)])
 
-            return X0 * np.exp(self.volatility * brownian_motion
-                               + (- 0.5 * self.volatility ** 2 + self.drift) * time_space)
+            return np.expand_dims(X0 * np.exp(self.volatility * brownian_motion
+                               + (- 0.5 * self.volatility ** 2 + self.drift) * time_space), axis=2)
         else:
             d = self.dimension
             vol = np.ones(d) * self.volatility if np.ndim(self.volatility) == 0 else self.volatility

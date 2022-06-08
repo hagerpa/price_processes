@@ -4,7 +4,6 @@ from typing import Union, Tuple
 import numpy as np
 
 
-# TODO: Make a uniform understanding for the volatility factor
 # TODO: Start laws for d-dim
 
 class PriceModel(ABC):
@@ -25,8 +24,8 @@ class PriceModel(ABC):
             _, a, b = start_law
             X0 = np.random.uniform(a, b, sample_shape)
         elif start_law[0] == "normal":
-            _, mean, var = start_law
-            X0 = mean + np.random.randn(*sample_shape) * np.sqrt(var)
+            _, mean, std = start_law
+            X0 = mean + np.random.randn(*sample_shape) * std
         elif start_law[0] == "dirac":
             X0 = np.ones(sample_shape) * start_law[1]
         elif start_law[0] == "diracs":

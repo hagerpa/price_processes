@@ -6,11 +6,16 @@ from .price_model import PriceModel
 class BlackScholesModel(PriceModel):
     def __init__(self, volatility=0.2, drift=0.0, correlation=None):
         """
-        A simple implementation of a Black-Scholes (geometric BM) stock price model with random starting point.
-        :param volatility: Volatility per annum.
-        :param drift: Drift term, e.g. dividend, interest_rate.
-        :param correlation: Correlation matrix.
-        :return: (n_samples, n_steps)-sample matrix
+        A simple implementation of a Black-Scholes (geometric BM) stock price model with random starting point, i.e. of
+        the process
+            X[i]_t = X[i]_0 * exp( volatility W[i]_t - (drift - volatility**2/2)t ),  i = 1,...,d,
+        where W is a d-dimensional Brownian motion with
+        :param correlation: dxd correlation matrix.
+
+        :param volatility: possibly a vector.
+        :param drift: possibly a vector.
+
+        :return: (n_samples, n_steps, d)-sample matrix
         """
         super().__init__()
         self.volatility = volatility

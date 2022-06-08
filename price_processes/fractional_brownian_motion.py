@@ -11,6 +11,8 @@ class FractionalBrownianMotion(PriceModel):
         Simulates a fractional Brownian motion using the spectral embedding method and the fast fourier transform.
         :param H: Hurst parameter.
         :param past: extend dimension of the process by including this number of past values.
+
+        :return: (n_samples, n_steps, 1 + past)-sample matrix
         """
         super().__init__()
         self.past = past

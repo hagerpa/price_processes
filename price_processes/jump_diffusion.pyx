@@ -3,7 +3,7 @@ import numpy as np
 from .price_model import PriceModel
 
 
-class JumpOrnsteinUhlenbeck(PriceModel):
+class MeanRevertingJumpDiffusion(PriceModel):
     def __init__(self,
                  volatility = 0.2,
                  mean = 2.5,
@@ -26,7 +26,7 @@ class JumpOrnsteinUhlenbeck(PriceModel):
 
         :param euler_refinement: discretizaiton of the euler scheme will be on a grid this times finer then the result.
 
-        :return: (n_samples, n_steps)-sample matrix
+        :return: (n_samples, n_steps, 1)-sample matrix
         """
         super().__init__()
         self.volatility = volatility

@@ -3,6 +3,8 @@ import numpy as np
 from optimal_control.price_models import PriceModel
 
 
+# TODO: Include Bennedsen Model
+
 class RoughEnergyPriceModel(PriceModel):
     def __init__(self, volatility: float, H: float, lam: float, memory_length: int, include_past_frame: bool):
         super().__init__()

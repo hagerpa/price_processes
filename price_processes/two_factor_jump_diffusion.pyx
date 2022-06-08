@@ -3,7 +3,7 @@ import numpy as np
 from .price_model import PriceModel
 
 
-class MultifactorJOU(PriceModel):
+class TwoFactorJumpDiffusion(PriceModel):
     def __init__(self,
                  volatility = (0.2, 0.2),
                  mean = 2.5,
@@ -14,7 +14,7 @@ class MultifactorJOU(PriceModel):
                  correlation=0.5,
                  euler_refinement = 1):
         """
-        Simulation of two correlated Jump Ornstein-Uhlenbeck processes, following the SDE+
+        Simulation of two correlated jump diffusion processes processes, following the SDE
 
             dX[0]_t = mean_revision[0] * (mean - X[0]_t) dt - volatility[0] * X_t dW[0]_t - (J[0]_t - X[0]_t) dP_t
             dX[1]_t = mean_revision[1] * (mean - X[0]_t) dt - volatility[1] * X_t dW[1]_t - (J[1]_t - X[1]_t) dP_t
@@ -28,7 +28,7 @@ class MultifactorJOU(PriceModel):
         :param jump_mean: Mean of jumps.
         :param jump_std: Standard deviation of jumps.
 
-        :return: (n_samples, n_steps)-sample matrix
+        :return: (n_samples, n_steps, 2)-sample matrix
         """
         super().__init__()
         self.volatility = volatility
@@ -48,11 +48,11 @@ class MultifactorJOU(PriceModel):
         # Sampling all at one place so that fixing a random seed in a top level gives reasonable results.
         P = np.array(np.random.binomial(1, time_delta*self.lam, size=(m,n)), dtype=np.int16)
         W = np.random.randn(m,n,2)
-        c_coef = (1-self.correlation**2)**0.5
-        W[:,:,1] = self.correlation*W[:,:,0] + c_coef*W[:,:,1]
+        c_coefficient = (1-self.correlation**2)**0.5
+        W[:,:,1] = self.correlation*W[:,:,0] + c_coefficient*W[:,:,1]
         W = np.sqrt(time_delta)*W
         J = np.random.randn(m,n,2)
-        J[:,:,1] = self.correlation*J[:,:,0] + c_coef*J[:,:,1]
+        J[:,:,1] = self.correlation*J[:,:,0] + c_coefficient*J[:,:,1]
         J = self.jump_std*J + self.jump_mean
 
         mr1, mr2 = self.mean_reversion

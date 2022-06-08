@@ -2,7 +2,7 @@ import numpy as np
 import scipy
 from scipy.fft import hfft, ihfft
 
-from .price_model import PriceModel
+from price_processes.price_model import PriceModel
 
 
 class FractionalBrownianMotion(PriceModel):

@@ -1,6 +1,6 @@
 import numpy as np
 
-from .price_model import PriceModel
+from price_processes.price_model import PriceModel
 
 
 class TwoFactorJumpDiffusion(PriceModel):

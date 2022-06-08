@@ -1,5 +1,5 @@
-import numpy as np
-from optimal_control.price_models import PriceModel
+import numpy as np  #
+from price_processes import PriceModel
 from scipy.fft import rfft, hfft, ihfft
 from scipy.special import gamma, kv
 
